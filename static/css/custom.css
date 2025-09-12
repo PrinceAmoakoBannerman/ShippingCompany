@@ -1,0 +1,63 @@
+/* Custom CSS for shipping management system */
+
+:root {
+    --primary-color: #0066cc;
+    --secondary-color: #004d99;
+    --accent-color: #ff6b35;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --light-bg: #f8f9fa;
+    --dark-text: #2c3e50;
+}
+
+/* Admin customizations */
+.admin-container {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+/* Responsive table improvements */
+.table-responsive {
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Status badges */
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-badge.paid {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.status-badge.not-paid {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.status-badge.pending {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #856404;
+}
+
+/* Carriers Section Styling */
+.carriers-section {
+    padding: 3rem 0;
+    background-color: #f8f9fa;
+}
+
+.carriers-section img {
+    max-width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.carriers-section img:hover {
+    transform: scale(1.1);
+}

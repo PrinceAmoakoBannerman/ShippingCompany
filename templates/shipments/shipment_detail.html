@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+
+{% block title %}Shipment {{ shipment.bl_number }} - ShipTrack Pro{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Back Button -->
+            <div class="mb-4">
+                <a href="{% url 'shipments:tracking_home' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left"></i> Back to Tracking
+                </a>
+            </div>
+
+            <!-- Shipment Details Card -->
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-cube"></i> Shipment Details: {{ shipment.bl_number }}
+                        <span class="float-end">
+                            {% if shipment.gate_out_date %}
+                                <span class="badge bg-success">Delivered</span>
+                            {% elif shipment.is_overdue %}
+                                <span class="badge bg-danger">Overdue</span>
+                            {% else %}
+                                <span class="badge bg-warning">In Transit</span>
+                            {% endif %}
+                        </span>
+                    </h3>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Left Column -->
+                        <div class="col-md-6">
+                            <h5 class="border-bottom pb-2 mb-4">Basic Information</h5>
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">BL Number</label>
+                                <div class="form-control-plaintext fw-bold text-primary">
+                                    {{ shipment.bl_number }}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Container Number</label>
+                                <div class="form-control-plaintext">{{ shipment.container_no }}</div>
+                            </div>
+
+                            {% if shipment.chassis_no %}
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Chassis Number</label>
+                                <div class="form-control-plaintext">{{ shipment.chassis_no }}</div>
+                            </div>
+                            {% endif %}
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Shipping Line</label>
+                                <div class="form-control-plaintext">{{ shipment.shipping_line }}</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Consignee</label>
+                                <div class="form-control-plaintext">{{ shipment.consignee }}</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Shipper</label>
+                                <div class="form-control-plaintext">{{ shipment.shipper }}</div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="col-md-6">
+                            <h5 class="border-bottom pb-2 mb-4">Status & Timeline</h5>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Expected Arrival (ETA)</label>
+                                <div class="form-control-plaintext">
+                                    <i class="fas fa-calendar text-primary"></i> {{ shipment.eta|date:"F d, Y" }}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Gate Out Date</label>
+                                <div class="form-control-plaintext">
+                                    {% if shipment.gate_out_date %}
+                                        <i class="fas fa-calendar-check text-success"></i> {{ shipment.gate_out_date|date:"F d, Y" }}
+                                    {% else %}
+                                        <span class="text-muted">Not yet delivered</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Duty Status</label>
+                                <div class="form-control-plaintext">
+                                    {% if shipment.duty_status %}
+                                        <span class="badge bg-success fs-6">
+                                            <i class="fas fa-check-circle"></i> Paid
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-danger fs-6">
+                                            <i class="fas fa-times-circle"></i> Not Paid
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Freight Status</label>
+                                <div class="form-control-plaintext">
+                                    {% if shipment.freight_status == 'paid' %}
+                                        <span class="badge bg-success fs-6">
+                                            <i class="fas fa-check-circle"></i> {{ shipment.get_freight_status_display }}
+                                        </span>
+                                    {% elif shipment.freight_status == 'not_paid' %}
+                                        <span class="badge bg-danger fs-6">
+                                            <i class="fas fa-times-circle"></i> {{ shipment.get_freight_status_display }}
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-warning fs-6">
+                                            <i class="fas fa-clock"></i> {{ shipment.get_freight_status_display }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Assigned Agent</label>
+                                <div class="form-control-plaintext">
+                                    {% if shipment.agent_assigned %}
+                                        <i class="fas fa-user text-primary"></i> {{ shipment.agent_assigned }}
+                                    {% else %}
+                                        <span class="text-muted">Not assigned</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Supervisor Status</label>
+                                <div class="form-control-plaintext">{{ shipment.get_supervisor_status_display }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    {% if shipment.description %}
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <h5 class="border-bottom pb-2 mb-4">Description</h5>
+                            <div class="form-control-plaintext">{{ shipment.description }}</div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Additional Information -->
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h6 class="fw-bold">Storage Information</h6>
+                            <div class="mb-2">
+                                <span class="text-muted">Free Days:</span> 
+                                <span class="fw-bold">{{ shipment.free_days }} days</span>
+                            </div>
+                            <div class="mb-2">
+                                <span class="text-muted">Demurrage Days:</span> 
+                                <span class="fw-bold {% if shipment.demurrage_days > 0 %}text-warning{% endif %}">
+                                    {{ shipment.demurrage_days }} days
+                                    {% if shipment.demurrage_days > 0 %}
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="fw-bold">Item Information</h6>
+                            <div class="mb-2">
+                                <span class="text-muted">Quantity:</span> 
+                                <span class="fw-bold">{{ shipment.item_quantity }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Footer with Actions -->
+                <div class="card-footer bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">
+                            Last updated: {{ shipment.updated_at|date:"F d, Y g:i A" }}
+                        </small>
+                        <div>
+                            <button class="btn btn-outline-primary btn-sm" onclick="window.print()">
+                                <i class="fas fa-print"></i> Print
+                            </button>
+                            <button class="btn btn-primary btn-sm" onclick="window.history.back()">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form method="post">{% csrf_token %}
+                <!-- Add your form fields here -->
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
