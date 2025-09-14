@@ -19,8 +19,12 @@ SECRET_KEY = 'django-insecure-your-secret-key-change-in-production'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['https://shippingcompany-4dhc.onrender.com', 'localhost', ]
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost',
+    'http://127.0.0.1',
+    'https://shippingcompany-4dhc.onrender.com'
+]
 # Application definition
 INSTALLED_APPS = [
     'jazzmin',  # Must be before django.contrib.admin
