@@ -11,19 +11,17 @@
         
         <!-- Tracking Form -->
         <div class="tracking-form">
-            <form id="trackingForm" method="post">{% csrf_token %}
-                <div class="position-relative">
-                    <input 
-                        type="text" 
-                        id="trackingNumber" 
-                        class="form-control tracking-input" 
-                        placeholder="Enter BL Number, Container Number, or Chassis Number"
-                        required
-                    >
-                    <button type="submit" class="btn btn-primary tracking-btn">
-                        <i class="fas fa-search"></i> Track
-                    </button>
-                </div>
+            <form id="trackingForm" method="post" class="d-flex w-100 gap-2">{% csrf_token %}
+                <input 
+                    type="text" 
+                    id="trackingNumber" 
+                    class="form-control tracking-input flex-grow-1" 
+                    placeholder="Enter BL Number, Container Number, or Chassis Number"
+                    required
+                >
+                <button type="submit" class="btn btn-primary tracking-btn">
+                    <i class="fas fa-search"></i> Track
+                </button>
             </form>
         </div>
 
