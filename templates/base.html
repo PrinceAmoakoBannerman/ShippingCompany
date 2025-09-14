@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
             --primary-color: #232f3e;
@@ -25,7 +25,6 @@
             --dark-text: #232f3e;
             --border-color: #e9ecef;
         }
-
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #f4f6f8;
@@ -33,7 +32,6 @@
             margin: 0;
             padding: 0;
         }
-
         .navbar {
             background: #fff !important;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
@@ -49,7 +47,6 @@
         .navbar-toggler {
             border-color: var(--accent-color);
         }
-
         .hero-section {
             background: linear-gradient(120deg, #232f3e 60%, #ff6600 100%);
             color: #fff;
@@ -163,7 +160,6 @@
             {% block hero_content %}{% endblock %}
         </div>
     </section>
-
     <!-- Inserted Container Image -->
         <!-- Carousel Section -->
         <div id="mainCarousel" class="carousel slide my-4" data-bs-ride="carousel">
@@ -203,9 +199,6 @@
             <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
             </div>
         </div>
-
-    <!-- Second Hero Section (if present) -->
-    </section>
     <!-- Main Content -->
     <main class="main-content">
         {% block content %}{% endblock %}
@@ -232,7 +225,6 @@
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
     {% block extra_js %}{% endblock %}
 </body>
 </html>

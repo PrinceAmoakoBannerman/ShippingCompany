@@ -26,7 +26,7 @@ class TrackingHomeView(TemplateView):
         context['total_shipments'] = Shipment.objects.count()
         context['recent_arrivals'] = Shipment.objects.filter(
             gate_out_date__isnull=False
-        ).order_by('-gate_out_date')[:5]
+        ).order_by('-gate_out_date')[:4]
         return context
 
 

@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 {% block title %}Track Your Shipment - ShipTrack Pro{% endblock %}
@@ -210,107 +211,85 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div class="detail-label">BL Number</div>
                                 <div class="detail-value"><strong>${shipment.bl_number}</strong></div>
                             </div>
-                            
                             <div class="shipment-detail-card">
                                 <div class="detail-label">Container Number</div>
                                 <div class="detail-value"><strong>${shipment.container_no}</strong></div>
                             </div>
-
                             ${shipment.chassis_no !== 'N/A' ? `
                             <div class="shipment-detail-card">
                                 <div class="detail-label">Chassis Number</div>
                                 <div class="detail-value"><strong>${shipment.chassis_no}</strong></div>
                             </div>
                             ` : ''}
-
                             <div class="shipment-detail-card">
                                 <div class="detail-label">Shipping Line</div>
-                                <div class="detail-value">${shipment.shipping_line}</div>
+                                <div class="detail-value"><strong>${shipment.shipping_line}</strong></div>
                             </div>
-
                             <div class="shipment-detail-card">
                                 <div class="detail-label">Consignee</div>
-                                <div class="detail-value">${shipment.consignee}</div>
+                                <div class="detail-value"><strong>${shipment.consignee}</strong></div>
                             </div>
-
                             <div class="shipment-detail-card">
                                 <div class="detail-label">Shipper</div>
-                                <div class="detail-value">${shipment.shipper}</div>
+                                <div class="detail-value"><strong>${shipment.shipper}</strong></div>
                             </div>
                         </div>
-
                         <div class="col-md-6">
                             <div class="shipment-detail-card">
                                 <div class="detail-label">Expected Arrival (ETA)</div>
-                                <div class="detail-value">
-                                    <i class="fas fa-calendar"></i> ${shipment.eta}
-                                </div>
+                                <div class="detail-value"><i class="fas fa-calendar"></i> <strong>${shipment.eta}</strong></div>
                             </div>
-
                             <div class="shipment-detail-card">
                                 <div class="detail-label">Gate Out Date</div>
-                                <div class="detail-value">
-                                    <i class="fas fa-calendar-check"></i> ${shipment.gate_out_date}
-                                </div>
+                                <div class="detail-value"><i class="fas fa-calendar-check"></i> <strong>${shipment.gate_out_date}</strong></div>
                             </div>
-
                             <div class="shipment-detail-card">
                                 <div class="detail-label">Duty Status</div>
                                 <div class="detail-value">
                                     <span class="status-indicator ${shipment.duty_status === 'Paid' ? 'status-paid' : 'status-not-paid'}">
-                                        <i class="fas ${shipment.duty_status === 'Paid' ? 'fa-check-circle' : 'fa-times-circle'}"></i>
-                                        ${shipment.duty_status}
+                                        <i class="fas ${shipment.duty_status === 'Paid' ? 'fa-check-circle text-success' : 'fa-times-circle'}"></i>
+                                        <strong>${shipment.duty_status}</strong>
                                     </span>
                                 </div>
                             </div>
-
                             <div class="shipment-detail-card">
                                 <div class="detail-label">Freight Status</div>
                                 <div class="detail-value">
                                     <span class="status-indicator ${getFreightStatusClass(shipment.freight_status)}">
-                                        <i class="fas ${getFreightStatusIcon(shipment.freight_status)}"></i>
-                                        ${shipment.freight_status}
+                                        <i class="fas ${getFreightStatusIcon(shipment.freight_status)}${shipment.freight_status.toLowerCase() === 'paid' ? ' text-success' : ''}"></i>
+                                        <strong>${shipment.freight_status}</strong>
                                     </span>
                                 </div>
                             </div>
-
                             <div class="shipment-detail-card">
                                 <div class="detail-label">Assigned Agent</div>
-                                <div class="detail-value">
-                                    <i class="fas fa-user"></i> ${shipment.agent_assigned}
-                                </div>
+                                <div class="detail-value"><i class="fas fa-user${shipment.agent_assigned && shipment.agent_assigned.toLowerCase() !== 'not assigned' ? ' text-success' : ''}"></i> <strong>${shipment.agent_assigned}</strong></div>
                             </div>
-
                             <div class="shipment-detail-card">
                                 <div class="detail-label">Supervisor Status</div>
-                                <div class="detail-value">${shipment.supervisor_status}</div>
+                                <div class="detail-value"><strong>${shipment.supervisor_status}</strong></div>
                             </div>
                         </div>
                     </div>
-
                     <div class="row mt-4">
                         <div class="col-12">
                             <div class="shipment-detail-card">
                                 <div class="detail-label">Description</div>
-                                <div class="detail-value">${shipment.description}</div>
+                                <div class="detail-value"><strong>${shipment.description}</strong></div>
                             </div>
                         </div>
                     </div>
-
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <div class="shipment-detail-card">
                                 <div class="detail-label">Free Days</div>
-                                <div class="detail-value"><i class="fas fa-clock"></i> ${shipment.free_days} days</div>
+                                <div class="detail-value"><i class="fas fa-clock"></i> <strong>${shipment.free_days} days</strong></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="shipment-detail-card">
                                 <div class="detail-label">Demurrage Days</div>
-                                <div class="detail-value">
-                                    <i class="fas fa-exclamation-triangle ${shipment.demurrage_days > 0 ? 'text-warning' : ''}"></i> 
-                                    ${shipment.demurrage_days} days
-                                </div>
+                                <div class="detail-value"><i class="fas fa-exclamation-triangle ${shipment.demurrage_days > 0 ? 'text-warning' : ''}"></i> <strong>${shipment.demurrage_days} days</strong></div>
                             </div>
                         </div>
                     </div>
