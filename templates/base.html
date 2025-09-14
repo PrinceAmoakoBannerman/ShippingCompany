@@ -171,17 +171,36 @@
                                         <div class="carousel-item active">
                                             <img src="/static/images/container1.jpg" class="d-block w-100" alt="Container 1" style="height:340px; width:100%; object-fit:cover; border-radius:18px;">
                                             <div class="carousel-caption d-none d-md-block text-start">
-                                                <h2 class="fw-bold">Fast, Secure, Global Shipping</h2>
-                                                <p>Track your container or BL number with real-time updates.</p>
-                                                <a href="#" class="btn btn-warning text-white fw-bold px-4 py-2 mt-2" style="background:var(--accent-color); border:none;">Learn more</a>
+                                                        <div class="carousel-caption text-start" style="background:rgba(0,0,0,0.35); border-radius:12px; padding:1.2rem 1.5rem; left:2%; right:auto; bottom:2%; max-width:90vw;">
+                                                            <h2 class="fw-bold text-white" style="font-size:2rem;">Fast, Secure, Global Shipping</h2>
+                                                            <p class="text-white mb-2">Track your container or BL number with real-time updates.</p>
+                                                            <a href="#" class="btn btn-warning text-white fw-bold px-4 py-2 mt-2" style="background:var(--accent-color); border:none;">Learn more</a>
+                                                        </div>
                                             </div>
                                         </div>
                                         <div class="carousel-item">
                                             <img src="/static/images/container2.jpg" class="d-block w-100" alt="Container 2" style="height:340px; width:100%; object-fit:cover; border-radius:18px;">
                                             <div class="carousel-caption d-none d-md-block text-start">
-                                                <h2 class="fw-bold">Seamless Container Management</h2>
-                                                <p>Monitor your shipments across the globe with ease and confidence.</p>
-                                                <a href="#" class="btn btn-warning text-white fw-bold px-4 py-2 mt-2" style="background:var(--accent-color); border:none;">Get Started</a>
+                                                        <div class="carousel-caption text-start" style="background:rgba(0,0,0,0.35); border-radius:12px; padding:1.2rem 1.5rem; left:2%; right:auto; bottom:2%; max-width:90vw;">
+                                                            <h2 class="fw-bold text-white" style="font-size:2rem;">Seamless Container Management</h2>
+                                                            <p class="text-white mb-2">Monitor your shipments across the globe with ease and confidence.</p>
+                                                            <a href="#" class="btn btn-warning text-white fw-bold px-4 py-2 mt-2" style="background:var(--accent-color); border:none;">Get Started</a>
+                                                        </div>
+        @media (max-width: 768px) {
+            .carousel-caption {
+                left: 2% !important;
+                right: 2% !important;
+                bottom: 2% !important;
+                padding: 0.7rem 0.8rem !important;
+                max-width: 96vw !important;
+            }
+            .carousel-caption h2 {
+                font-size: 1.2rem !important;
+            }
+            .carousel-caption p, .carousel-caption a {
+                font-size: 0.95rem !important;
+            }
+        }
                                             </div>
                                         </div>
                     </div>
