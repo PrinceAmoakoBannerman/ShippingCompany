@@ -14,6 +14,11 @@ load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
 SCOPES = ['https://www.googleapis.com/auth/drive.file']
 
+# Your Shared Drive folder ID (from your link)
+DEFAULT_FOLDER_ID = "1KmlipO7ZnG-q7pUM-nNFyOgzWopgCzvR"
+# If you know your Shared Drive ID, set it here (optional)
+DEFAULT_DRIVE_ID = None  # e.g. "0Axxxxxxxxxxxxxxxxxxxx"
+
 def get_drive_service():
     try:
         # Try from Render environment variable
@@ -35,20 +40,22 @@ def get_drive_service():
         logger.error(f"Google Drive authentication failed: {e}", exc_info=True)
         raise
 
-
-def upload_file_to_drive_path(file_path, filename=None, mimetype=None, folder_id=None):
-    """Upload a file from disk (file path)"""
+def upload_file_to_drive_path(file_path, filename=None, mimetype=None, folder_id=DEFAULT_FOLDER_ID, drive_id=DEFAULT_DRIVE_ID):
+    """Upload a file from disk (file path) to the Shared Drive folder"""
     try:
         service = get_drive_service()
         file_metadata = {'name': filename or os.path.basename(file_path)}
         if folder_id:
             file_metadata['parents'] = [folder_id]
+        if drive_id:
+            file_metadata['driveId'] = drive_id
 
         media = MediaFileUpload(file_path, mimetype=mimetype, resumable=True)
         file = service.files().create(
             body=file_metadata,
             media_body=media,
-            fields='id,webViewLink'
+            fields='id,webViewLink',
+            supportsAllDrives=True
         ).execute()
 
         logger.info(f"Uploaded file {file.get('id')} → {file.get('webViewLink')}")
@@ -58,20 +65,22 @@ def upload_file_to_drive_path(file_path, filename=None, mimetype=None, folder_id
         logger.error(f"Google Drive upload failed: {e}", exc_info=True)
         raise
 
-
-def upload_file_to_drive_obj(file_obj, filename, mimetype=None, folder_id=None):
-    """Upload a file-like object (e.g., from Django admin)"""
+def upload_file_to_drive_obj(file_obj, filename, mimetype=None, folder_id=DEFAULT_FOLDER_ID, drive_id=DEFAULT_DRIVE_ID):
+    """Upload a file-like object (e.g., from Django admin) to the Shared Drive folder"""
     try:
         service = get_drive_service()
         file_metadata = {'name': filename}
         if folder_id:
             file_metadata['parents'] = [folder_id]
+        if drive_id:
+            file_metadata['driveId'] = drive_id
 
         media = MediaIoBaseUpload(file_obj, mimetype=mimetype, resumable=True)
         file = service.files().create(
             body=file_metadata,
             media_body=media,
-            fields='id,webViewLink'
+            fields='id,webViewLink',
+            supportsAllDrives=True
         ).execute()
 
         logger.info(f"Uploaded file {file.get('id')} → {file.get('webViewLink')}")

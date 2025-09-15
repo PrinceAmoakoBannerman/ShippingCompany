@@ -9,10 +9,15 @@ from .models import Shipment
 from .models import AdminUpload
 from .google_drive import upload_file_to_drive_obj
 
+
 @admin.register(AdminUpload)
 class AdminUploadAdmin(admin.ModelAdmin):
     list_display = ("file", "uploaded_at", "drive_file_link")
     readonly_fields = ("drive_file_id", "drive_file_link")
+
+    # Set your Shared Drive folder and drive IDs here
+    SHARED_DRIVE_FOLDER_ID = "1KmlipO7ZnG-q7pUM-nNFyOgzWopgCzvR"
+    SHARED_DRIVE_ID = None  # Set this if you know your Shared Drive ID, else leave as None
 
     def save_model(self, request, obj, form, change):
         # Only upload if this is a new file or the file has changed
@@ -22,11 +27,15 @@ class AdminUploadAdmin(admin.ModelAdmin):
                 file_obj,
                 obj.file.name,
                 mimetype=getattr(obj.file.file, "content_type", None),
+                folder_id=self.SHARED_DRIVE_FOLDER_ID,
+                drive_id=self.SHARED_DRIVE_ID,
             )
             obj.drive_file_id = file_id
             obj.drive_file_link = file_link
             file_obj.close()
         super().save_model(request, obj, form, change)
+
+
 
 class ShipmentResource(resources.ModelResource):
     """
