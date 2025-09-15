@@ -3,6 +3,16 @@ from django.core.validators import MinValueValidator
 from django.utils import timezone
 
 
+class AdminUpload(models.Model):
+    file = models.FileField(upload_to='uploads/')
+    description = models.TextField(blank=True, null=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    drive_file_id = models.CharField(max_length=128, blank=True, null=True)
+    drive_file_link = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return self.file.name
+
 class Shipment(models.Model):
     """
     Shipment model representing a shipping container/cargo record.

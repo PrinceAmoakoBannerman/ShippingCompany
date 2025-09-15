@@ -6,6 +6,12 @@ from import_export.admin import ImportExportModelAdmin
 from import_export import resources
 from import_export.fields import Field
 from .models import Shipment
+from .models import AdminUpload
+
+@admin.register(AdminUpload)
+class AdminUploadAdmin(admin.ModelAdmin):
+    list_display = ("file", "uploaded_at", "drive_file_link")
+    readonly_fields = ("drive_file_id", "drive_file_link")
 
 
 class ShipmentResource(resources.ModelResource):
