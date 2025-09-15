@@ -7,12 +7,26 @@ from import_export import resources
 from import_export.fields import Field
 from .models import Shipment
 from .models import AdminUpload
+from .google_drive import upload_file_to_drive_obj
 
 @admin.register(AdminUpload)
 class AdminUploadAdmin(admin.ModelAdmin):
     list_display = ("file", "uploaded_at", "drive_file_link")
     readonly_fields = ("drive_file_id", "drive_file_link")
 
+    def save_model(self, request, obj, form, change):
+        # Only upload if this is a new file or the file has changed
+        if obj.file and not obj.drive_file_id:
+            file_obj = obj.file.open("rb")
+            file_id, file_link = upload_file_to_drive_obj(
+                file_obj,
+                obj.file.name,
+                mimetype=getattr(obj.file.file, "content_type", None),
+            )
+            obj.drive_file_id = file_id
+            obj.drive_file_link = file_link
+            file_obj.close()
+        super().save_model(request, obj, form, change)
 
 class ShipmentResource(resources.ModelResource):
     """
