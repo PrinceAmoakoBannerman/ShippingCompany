@@ -36,3 +36,6 @@ staticfiles/
 
 # Ignore user-uploaded media files
 media/
+
+client_secret_*.json
+token.json
