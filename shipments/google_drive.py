@@ -1,4 +1,5 @@
 import os
+import json
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload, MediaIoBaseUpload
 from dotenv import load_dotenv
@@ -8,17 +9,17 @@ from google.oauth2 import service_account
 load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
 SCOPES = ['https://www.googleapis.com/auth/drive.file']
-CREDENTIALS_PATH = os.environ.get('GOOGLE_DRIVE_CLIENT_SECRET_PATH')
-
-# Debug: show resolved paths and existence (optional, remove in production)
-print("CREDENTIALS_PATH:", CREDENTIALS_PATH)
-print("Does credentials file exist?", bool(CREDENTIALS_PATH and os.path.exists(CREDENTIALS_PATH)))
 
 def get_drive_service():
-    creds = service_account.Credentials.from_service_account_file(
-        CREDENTIALS_PATH,
-        scopes=SCOPES
-    )
+    # Try to get service account info from environment variable (for Render)
+    service_account_info = os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON")
+    if service_account_info:
+        info = json.loads(service_account_info)
+        creds = service_account.Credentials.from_service_account_info(info, scopes=SCOPES)
+    else:
+        # Fallback to file path (for local development)
+        CREDENTIALS_PATH = os.environ.get('GOOGLE_DRIVE_CLIENT_SECRET_PATH')
+        creds = service_account.Credentials.from_service_account_file(CREDENTIALS_PATH, scopes=SCOPES)
     service = build('drive', 'v3', credentials=creds)
     return service
 
